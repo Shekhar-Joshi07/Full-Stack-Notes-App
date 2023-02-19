@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+    <div class="heading"><h3>Sign Up Now 👇</h3></div>
+    <form onsubmit="signup(event)"  >
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      
+        <label for="password">Password:</label>
+        <input type="password" id="pass" name="password" required>
+      
+        <button  type="submit">Sign up</button>
+        <div class="already-registered">
+            <p>Already have an account?</p>
+            <a href="./login.html">Log in</a>
+          </div>
+      </form>
+    
+</body>
+</html>
+
+<script>
+
+    function signup(event){
+        event.preventDefault();
+
+        let obj = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            pass: document.getElementById("pass").value,
+        };
+
+        const postNote = async(obj)=>{
+            try {
+        const data = await fetch(
+          "https://proud-plum-lab-coat.cyclic.app/users/register",{
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify(obj),
+          }
+        );
+        window.location.href = "./login.html";
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    postNote(obj);
+          
+ }
+
+</script>

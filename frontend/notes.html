@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="notes.css">
+    <title>Add Notes</title>
+  </head>
+  <body>
+    <div id="head"><h3>Notes App 📝</h3></div>
+    <div id="container"></div>
+    </div>
+  </body>
+</html>
+
+<script>
+    //getting notes
+  const getData = async () => {
+   
+    try {
+      let data = await fetch("https://proud-plum-lab-coat.cyclic.app/notes/", {
+        method: "GET",
+        headers: {
+          token: JSON.parse(localStorage.getItem("token")),
+
+        },
+        
+      });
+      data = await data.json()
+      let container = document.getElementById("container");
+      container.innerHTML = null;
+      data.data.forEach((el)=>{
+        let div = document.createElement("div")
+        div.setAttribute("id","innerdiv")
+        let title = document.createElement("h3")
+        title.innerText = `Title: ${el.title}`
+        let body = document.createElement("p")
+        body.innerText = `Body: ${el.body}`
+
+        div.append(title,body)
+        container.append(div)
+
+        
+
+      
+
+        
+      })
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getData()
+</script>

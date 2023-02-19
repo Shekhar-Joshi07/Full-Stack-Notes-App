@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login:Notes App</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="heading"><h3>Login Here 👇</h3></div>
+    <form onsubmit="login(event)" >
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      
+        <label for="password">Password:</label>
+        <input type="password" id="pass" name="password" required>
+      
+        <button type="submit">Log in</button>
+      
+        <div class="not-registered">
+          <p>Don't have an account?</p>
+          <a href="./index.html">Sign up</a>
+        </div>
+      </form>
+    
+</body>
+</html>
+
+<script>
+    function login(event){
+        event.preventDefault();
+
+        let obj ={
+            email: document.getElementById("email").value,
+            pass: document.getElementById("pass").value,
+        }
+        const postData = async (obj) => {
+      try {
+        let data = await fetch(
+          "https://proud-plum-lab-coat.cyclic.app/users/login",
+          {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify(obj),
+          }
+        );
+        data = await data.json();
+        if(data.token){
+          localStorage.setItem("token",JSON.stringify(data.token));
+          window.location.href="./notes.html"
+        }
+        else{
+          alert("Wrong Credentials");
+        }
+        
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    postData(obj);
+  }
+
+</script>
